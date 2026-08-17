@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Did You Ask Copilot?</title>
+<meta name="description" content="A friendly reminder to ask your AI assistant before you rubber-duck your teammate.">
+<style>
+  :root {
+    --bg: #f7f7f8;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #2563eb;
+    --bad-bubble: #f3f4f6;
+    --bad-bubble-text: #1a1a1a;
+    --good-bubble: #2563eb;
+    --good-bubble-text: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 3rem 1.25rem 4rem;
+  }
+  h1 {
+    font-size: 2rem;
+    margin: 0 0 0.25rem;
+    text-align: center;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    margin: 0 0 2.5rem;
+    font-size: 1.05rem;
+  }
+  h2 {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin: 2.5rem 0 0.75rem;
+  }
+  .chat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .bubble {
+    max-width: 80%;
+    padding: 0.5rem 0.85rem;
+    border-radius: 14px;
+    font-size: 0.95rem;
+  }
+  .them {
+    background: var(--bad-bubble);
+    color: var(--bad-bubble-text);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+  }
+  .you {
+    background: var(--good-bubble);
+    color: var(--good-bubble-text);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+  }
+  .label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 0.25rem 0 0.1rem;
+  }
+  .label.right { text-align: right; }
+  p {
+    font-size: 1rem;
+  }
+  .moral {
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 2.5rem 0;
+    padding: 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  ul {
+    padding-left: 1.25rem;
+  }
+  li { margin-bottom: 0.5rem; }
+  .footer {
+    margin-top: 3rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  code {
+    background: var(--bad-bubble);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  .caveat {
+    margin-top: 2.5rem;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--accent);
+    background: var(--card);
+    border-radius: 0 8px 8px 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1115;
+      --card: #181b21;
+      --text: #e7e9ec;
+      --muted: #9aa1ab;
+      --border: #2a2e37;
+      --accent: #6ea8fe;
+      --bad-bubble: #262a33;
+      --bad-bubble-text: #e7e9ec;
+      --good-bubble: #2f5fd6;
+      --good-bubble-text: #ffffff;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Did You Ask Copilot?</h1>
+  <p class="subtitle">A short guide to asking your question the fast way, for both of you.</p>
+
+  <h2>The slow way</h2>
+  <div class="chat">
+    <div class="label">Sam</div>
+    <div class="bubble them">hey, got a sec?</div>
+    <div class="label right">You</div>
+    <div class="bubble you">sure, what's up?</div>
+    <div class="label">Sam</div>
+    <div class="bubble them">quick question about the auth service</div>
+    <div class="label right">You</div>
+    <div class="bubble you">ok, go ahead</div>
+    <div class="label">Sam</div>
+    <div class="bubble them">why does this token expire after 5 minutes instead of the config value?</div>
+    <div class="label right">You</div>
+    <div class="bubble you">did you check if the env var is actually being read?</div>
+    <div class="label">Sam</div>
+    <div class="bubble them">oh. let me look.</div>
+    <div class="label">Sam</div>
+    <div class="bubble them">yeah that was it, thanks</div>
+  </div>
+
+  <h2>The fast way</h2>
+  <div class="chat">
+    <div class="label right">You</div>
+    <div class="bubble you">Copilot: why does my JWT expire after 5 minutes when TOKEN_TTL is set to 3600 in .env?</div>
+    <div class="label">Copilot</div>
+    <div class="bubble them">Check whether the process is actually loading that .env file — a common cause is the config being read before dotenv runs, or a hardcoded default overriding it. Search for "expiresIn" in your codebase to confirm where the value comes from.</div>
+    <div class="label right">You</div>
+    <div class="bubble you">found it, thanks</div>
+  </div>
+
+  <p class="moral">Ask Copilot. Then ask your teammate — with the answer, or a much better question.</p>
+
+  <h2>Why this matters</h2>
+  <p>
+    Every "quick question" costs your teammate a context switch, not just the minute it takes to answer.
+    Most questions — <code>what does this error mean</code>, <code>how do I use this API</code>,
+    <code>why is this test failing</code>, <code>what's the syntax for X</code> — are things an LLM
+    answers instantly, with no one else's focus interrupted.
+  </p>
+  <p>That doesn't mean never ask a human. It means ask the robot first, so that when you do ask a person, it's because:</p>
+  <ul>
+    <li>Copilot got it wrong, or gave you something that didn't apply</li>
+    <li>The answer depends on context only a teammate has — a decision, a tradeoff, tribal knowledge</li>
+    <li>You need a second opinion or a sanity check on something you already tried</li>
+  </ul>
+  <p>
+    That's a much better question to receive — and a much better use of both your time.
+  </p>
+
+  <div class="caveat">
+    <strong>This isn't "never ask a human."</strong> It's "don't make a human be your search engine."
+    If you've genuinely tried and you're still stuck, or the question is about a decision rather than
+    a fact, go ahead and ask — that's what teammates are for.
+  </div>
+
+  <div class="footer">
+    <p>Inspired by <a href="https://nohello.net" target="_blank" rel="noopener">nohello.net</a>.</p>
+    <p><a href="https://github.com/mikedelgaudio/didyouaskcopilot" target="_blank" rel="noopener">Source on GitHub</a></p>
+  </div>
+</div>
+</body>
+</html>
