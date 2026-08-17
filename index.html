@@ -122,6 +122,17 @@
     color: var(--muted);
     font-size: 0.95rem;
   }
+  .tldr {
+    margin: 0 0 2.5rem;
+    padding: 1rem 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-size: 0.95rem;
+  }
+  .tldr strong {
+    color: var(--accent);
+  }
 
   @media (prefers-color-scheme: dark) {
     :root {
@@ -143,6 +154,8 @@
 <div class="wrap">
   <h1>Did You Ask Copilot?</h1>
   <p class="subtitle">A short guide to asking your question the fast way, for both of you.</p>
+
+  <p class="tldr"><strong>TL;DR:</strong> Ask Copilot (or Claude, or your favorite LLM) before you ask a teammate. If it can't answer, or the answer needs human judgment, then ask a human — with what you already tried.</p>
 
   <h2>The slow way</h2>
   <div class="chat">
